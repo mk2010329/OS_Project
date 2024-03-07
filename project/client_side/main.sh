@@ -4,22 +4,22 @@
 
 # Define the group name
 group_name="clients"
-client_1="client1"
+
 # Check if the current user is part of the group
-if groups "$client_1" | grep -q "\b${group_name}\b"; then
+if groups "$USER" | grep -q "\b${group_name}\b"; then
     echo "User is part of the '${group_name}' group. Proceeding with script execution."
 else
     echo "User is not part of the '${group_name}' group."
 
-    # Prompt the user to obtain superuser privileges
-    echo "Please provide superuser privileges to add "$client_1" to the '${group_name}' group."
+    # Prompting the user to obtain superuser privileges
+    echo "Please provide superuser privileges to add "$USER" to the '${group_name}' group."
 
     # Add the user to the group (create the group if it does not exist)
     sudo groupadd "${group_name}"
-    sudo usermod -aG "${group_name}" "client1"
+    sudo usermod -aG "${group_name}" "$USER"
 
     # Check if the group was successfully added
-    if groups "$client_1" | grep -q "\b${group_name}\b"; then
+    if groups "$USER" | grep -q "\b${group_name}\b"; then
         echo "User successfully added to the '${group_name}' group."
     else
         echo "Failed to add user to the '${group_name}' group. Please check your superuser privileges."
@@ -36,8 +36,8 @@ log_file="client_timestamp_invalid_attempts.log"
 max_attempts=3
 attempt=1
 
-while [ $attempt -le $max_attempts ]; do
-    echo "Attempt $attempt:"
+while [ $attempt -le $max_attempts ]; do # $attempt holds the value of variable attempt, same for max_attempts, "-le" means less than or equal to
+    echo "Attempt count: $attempt:"
     read -p "Enter username: " username
     read -sp "Enter password: " password
 
