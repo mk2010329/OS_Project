@@ -5,5 +5,5 @@ if [x = true]; then
     x = false;
 else
     current_date=$(date +"%Y-%m-%d")
-    echo "$current_date" + "Connectivity with $x is ok" 
+    echo "$current_date" + "Connectivity with $ip is ok" 
 fi
