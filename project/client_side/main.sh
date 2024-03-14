@@ -57,7 +57,7 @@ done
 if [ $attempt -gt $max_attempts ]; then
     echo "Unauthorized user!"
     # Copy the log file to the server using rsync
-    rsync -avz "$log_file" "$username"@192.168.10.21:/home/hassam/Desktop/OS_Project/project/server_side/user_logs
+    rsync -avz "$log_file" server@192.168.10.21:/home/server/Desktop/OS_Project/project/server_side/user_logs #/home/hassam/Desktop/OS_Project/project/server_side/user_logs
 
     # Schedule a user logout from the desktop session after one minute
     gnome-session-quit --no-prompt --force --logout-delay=1
