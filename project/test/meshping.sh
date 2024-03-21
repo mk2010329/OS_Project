@@ -21,19 +21,13 @@ for ((i=0; i<${#arrayip[@]}; i++)); do
 	if [[ $? -eq 0 ]]; then
 		current_date=$(date +"%Y-%m-%d %H-%M-%S")
     	echo -e "$current_date Connectivity with ${arrayip[i]} is ok\n"
-	
-
-	elif [[ condition ]]; then
-		#statements
+	else
+		echo -e "STOP\n"
 
 	fi
 
 
 done
 
-#
 
 
-./traceroute.sh
-
-timeout
