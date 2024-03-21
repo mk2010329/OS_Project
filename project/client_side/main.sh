@@ -46,7 +46,7 @@ while [ $attempt -le $max_attempts ]; do # $attempt holds the value of variable 
     echo "Invalid login attempt: Username=$username, Timestamp=$timestamp" >> "$log_file"
 
     # Try to login using SSH
-    sshpass -p "$password" ssh "$username"@osserver echo "Login successful" && break
+     sshpass -p "$password" ssh "$username"@os.com echo "Login successful" && break
 
     # Increment attempt counter
     ((attempt++))
@@ -57,10 +57,10 @@ done
 if [ $attempt -gt $max_attempts ]; then
     echo "Unauthorized user!"
     # Copy the log file to the server using rsync
-    rsync -avz "$log_file" server@os.come:/home/server/Desktop/OS_Project/project/server_side/user_logs #/home/hassam/Desktop/OS_Project/project/server_side/user_logs
+    rsync -avz "$log_file" server@os.com:/home/server/Desktop/OS_Project/project/server_side/user_logs #/home/hassam/Desktop/OS_Project/project/server_side/user_logs
 
     # Schedule a user logout from the desktop session after one minute
-    gnome-session-quit --no-prompt --force --logout-delay=1
+    sleep 60 && gnome-session-quit --no-prompt --force
 fi
 
 echo "Script execution complete."
