@@ -7,7 +7,7 @@ domain_name="os.com"
 # Update the resolvconf head file with the domain name and IP address mapping
 echo "domain $domain_name" > /etc/resolvconf/resolv.conf.d/head
 echo "search $domain_name" >> /etc/resolvconf/resolv.conf.d/head
-echo "nameserver $ip_address" >> /etc/resolvconf/resolv.conf.d/head
+echo $'nameserver 9.9.9.9\nnameserver 149.112.112.112' >> /etc/resolvconf/resolv.conf.d/head
 
 # Enable updates and update the resolv.conf file
 sudo resolvconf --enable-updates
