@@ -1,32 +1,5 @@
 #!/bin/bash
 
-# Step 1: Check User Group Membership
-
-# Define the group name
-group_name="clients"
-
-# Check if the current user is part of the group
-if groups "$USER" | grep -q "\b${group_name}\b"; then
-    echo "User is part of the '${group_name}' group. Proceeding with script execution."
-else
-    echo "User is not part of the '${group_name}' group."
-
-    # Prompting the user to obtain superuser privileges
-    echo "Please provide superuser privileges to add "$USER" to the '${group_name}' group."
-
-    # Add the user to the group (create the group if it does not exist)
-    sudo groupadd "${group_name}"
-    sudo usermod -aG "${group_name}" "$USER"
-
-    # Check if the group was successfully added
-    if groups "$USER" | grep -q "\b${group_name}\b"; then
-        echo "User successfully added to the '${group_name}' group."
-    else
-        echo "Failed to add user to the '${group_name}' group. Please check your superuser privileges."
-        exit 1
-    fi
-fi
-
 # Step 2: Log every invalid attempt to the server using SSH
 
 # Define the log file path
@@ -65,5 +38,30 @@ if [ $attempt -gt $max_attempts ]; then
     # Schedule a user logout from the desktop session after one minute
     sleep 60 && gnome-session-quit --no-prompt --force
 fi
+# Step 1: Check User Group Membership
 
+# Define the group name
+group_name="clients"
+
+# Check if the current user is part of the group
+if groups "$USER" | grep -q "\b${group_name}\b"; then
+    echo "User is part of the '${group_name}' group. Proceeding with script execution."
+else
+    echo "User is not part of the '${group_name}' group."
+
+    # Prompting the user to obtain superuser privileges
+    echo "Please provide superuser privileges to add "$USER" to the '${group_name}' group."
+
+    # Add the user to the group (create the group if it does not exist)
+    sudo groupadd "${group_name}"
+    sudo usermod -aG "${group_name}" "$USER"
+
+    # Check if the group was successfully added
+    if groups "$USER" | grep -q "\b${group_name}\b"; then
+        echo "User successfully added to the '${group_name}' group."
+    else
+        echo "Failed to add user to the '${group_name}' group. Please check your superuser privileges."
+        exit 1
+    fi
+fi
 echo "Script execution complete."
