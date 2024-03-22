@@ -30,7 +30,7 @@ fi
 # Step 2: Log every invalid attempt to the server using SSH
 
 # Define the log file path
-log_file="client_timestamp_invalid_attempts.log"
+#log_file="client_timestamp_invalid_attempts.log"
 
 # Define the maximum number of login attempts
 max_attempts=3
@@ -42,11 +42,11 @@ while [ $attempt -le $max_attempts ]; do # $attempt holds the value of variable 
     read -sp "Enter password: " password
 
     # Log the invalid attempt with username and timestamp
-    timestamp=$(date +"%Y-%m-%d %T")
-    echo "Invalid login attempt: Username=$username, Timestamp=$timestamp" >> "$log_file"
+    timestamp=$(date +"%Y-%m-%d_%T")
+    echo "Invalid login attempt: Username=$username, Timestamp=$timestamp" >> "client_($timestamp)_invalid_attempts.log"
 
     # Try to login using SSH
-     sshpass -p "$password" ssh "$username"@os.com echo "Login successful" && break
+     sshpass -p "$password" ssh "$username"@192.168.10.15 echo "Login successful" && break
 
     # Increment attempt counter
     ((attempt++))
@@ -57,7 +57,7 @@ done
 if [ $attempt -gt $max_attempts ]; then
     echo "Unauthorized user!"
     # Copy the log file to the server using rsync
-    rsync -avz "$log_file" server@os.com:/home/server/Desktop/OS_Project/project/server_side/user_logs #/home/hassam/Desktop/OS_Project/project/server_side/user_logs
+    rsync -avz "client_($timestamp)_invalid_attempts.log" server@192.168.10.15:/home/server/Desktop/OS_Project/project/server_side/user_logs #/home/hassam/Desktop/OS_Project/project/server_side/user_logs
 
     # Schedule a user logout from the desktop session after one minute
     sleep 60 && gnome-session-quit --no-prompt --force
