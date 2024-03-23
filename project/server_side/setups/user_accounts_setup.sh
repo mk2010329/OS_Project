@@ -1,8 +1,8 @@
 
 #!/usr/bin/env bash
 
-username1=client1
-password1=1234
+username1=mahodi
+password1=m
 
 # Create the user with the specified username
 sudo useradd -m -s /bin/bash $username1
@@ -12,8 +12,8 @@ echo "$username1:$password1" | sudo chpasswd
 
 echo "User '$username1' has been created with the password '$password1'"
 
-username2=client2
-password2=5678
+username2=basil
+password2=123
 
 # Creating second user with the specified username
 sudo useradd -m -s /bin/bash $username2
