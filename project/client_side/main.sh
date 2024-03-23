@@ -14,7 +14,8 @@ sudo systemctl enable sshd
 # Define the maximum number of login attempts
 max_attempts=3
 attempt=1
-address_ip="192.168.10.14"
+# static ip address of server
+address_ip="192.168.10.50"
 
 while [ $attempt -le $max_attempts ]; do # $attempt holds the value of variable attempt, same for max_attempts, "-le" means less than or equal to
     echo "Attempt count: $attempt:"
