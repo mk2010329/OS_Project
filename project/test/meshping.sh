@@ -6,7 +6,7 @@ sudo apt install nmap
 
 # We use the pipe so that on the output we can use grep to do pattern matching after extracting the ips we redirect and store the result in ip.txt.
 
-nmap -sn 192.168.10.0/24 | grep -o '\<192\.168\.10\.[0-9]\{1,3\}\>' > ip.txt
+nmap -sn 192.168.10.0/24 | grep -o 192.168.10.* > ip.txt
 
 #This is a built in command which maps each line of the ip.txt to an index of arrayip
 readarray -t arrayip <ip.txt
