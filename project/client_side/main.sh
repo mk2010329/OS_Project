@@ -1,10 +1,4 @@
 #!/bin/bash
-#making sure client requirements are there
-echo "Enter password for sudo actions: "
-sudo apt update
-sudo apt install openssh-server
-sudo systemctl start sshd
-sudo systemctl enable sshd
 
 # Step 2: Log every invalid attempt to the server using SSH
 
@@ -14,8 +8,7 @@ sudo systemctl enable sshd
 # Define the maximum number of login attempts
 max_attempts=3
 attempt=1
-# static ip address of server
-address_ip="192.168.10.50"
+address_ip="192.168.10.14"
 
 while [ $attempt -le $max_attempts ]; do # $attempt holds the value of variable attempt, same for max_attempts, "-le" means less than or equal to
     echo "Attempt count: $attempt:"
@@ -24,7 +17,7 @@ while [ $attempt -le $max_attempts ]; do # $attempt holds the value of variable 
     # Log the invalid attempt with username and timestamp
     datestamp=$(date +"%Y-%m-%d")
     timestamp=$(date +"%Y-%m-%d_%T")
-    filename="$USER-$datestamp-invalid_attempts.log"
+    filename="$USER-$datestamp-invalid-attempts.log"
     echo " "
     echo "Invalid login attempt: Username=$USER, Timestamp=$timestamp" >> "$filename"
 
@@ -41,7 +34,7 @@ if [ $attempt -gt $max_attempts ]; then
     echo " "
     echo "Unauthorized user!"
     # Copy the log file to the server using rsync
-    sshpass -p "server" rsync -avz "$filename" server@"$address_ip":/home/server/OS_Project/project/server_side/user_logs #/home/hassam/Desktop/OS_Project/project/server_side/user_logs
+    sshpass -p "server" rsync -avz "$filename" server@"$address_ip":/home/server/Desktop/OS_Project/project/server_side/user_logs #/home/hassam/Desktop/OS_Project/project/server_side/user_logs
     #mv *.log pastlogs
     # Schedule a user logout from the desktop session after one minute
     sleep 60 && gnome-session-quit --no-prompt --force
